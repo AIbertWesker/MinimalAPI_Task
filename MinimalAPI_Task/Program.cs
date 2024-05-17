@@ -1,10 +1,20 @@
+using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
 using MinimalAPI_Task;
+using MinimalAPI_Task.Converters;
 using MinimalAPI_Task.Models;
 using NSwag.AspNetCore;
+using System.Text.Json;
+
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<FakeDb>(opt => opt.UseInMemoryDatabase("PersonList"));
+
+builder.Services.Configure<JsonSerializerOptions>(options =>
+{
+    options.Converters.Add(new DateOnlyJsonConverter());
+});
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddEndpointsApiExplorer();
