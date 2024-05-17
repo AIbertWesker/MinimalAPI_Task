@@ -1,9 +1,10 @@
-using Microsoft.AspNetCore.Http.Json;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using MinimalAPI_Task;
 using MinimalAPI_Task.Converters;
 using MinimalAPI_Task.Endpoints;
 using MinimalAPI_Task.Models;
+using MinimalAPI_Task.Validations;
 using NSwag.AspNetCore;
 using System.Text.Json;
 
@@ -17,6 +18,7 @@ builder.Services.Configure<JsonSerializerOptions>(options =>
 });
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddValidatorsFromAssemblyContaining<PersonValidation>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApiDocument(config =>
@@ -25,7 +27,6 @@ builder.Services.AddOpenApiDocument(config =>
     config.Title = "PersonAPI v1";
     config.Version = "v1";
 });
-
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())

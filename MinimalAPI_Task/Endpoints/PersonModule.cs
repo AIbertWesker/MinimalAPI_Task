@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 using MinimalAPI_Task.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace MinimalAPI_Task.Endpoints
 {
@@ -16,8 +18,12 @@ namespace MinimalAPI_Task.Endpoints
                         ? Results.Ok(person)
                         : Results.NotFound());
 
-            app.MapPost("/personitems", async (Person person, FakeDb db) =>
+            app.MapPost("/personitems", async (IValidator <Person> _validator, Person person, FakeDb db) =>
             {
+                var validationResult = await _validator.ValidateAsync(person);
+                if(!validationResult.IsValid)
+                    return Results.BadRequest(validationResult.Errors.FirstOrDefault().ToString());
+
                 db.People.Add(person);
                 await db.SaveChangesAsync();
 
