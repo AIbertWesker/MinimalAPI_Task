@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
 using MinimalAPI_Task;
 using MinimalAPI_Task.Converters;
+using MinimalAPI_Task.Endpoints;
 using MinimalAPI_Task.Models;
 using NSwag.AspNetCore;
 using System.Text.Json;
@@ -39,22 +40,6 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-
-app.MapGet("/personitems", async (FakeDb db) =>
-    await db.People.ToListAsync());
-
-app.MapGet("/personitems/{id}", async (int id, FakeDb db) =>
-    await db.People.FindAsync(id)
-        is Person person
-            ? Results.Ok(person)
-            : Results.NotFound());
-
-app.MapPost("/personitems", async (Person person, FakeDb db) =>
-{
-    db.People.Add(person);
-    await db.SaveChangesAsync();
-
-    return Results.Created($"/personitems/{person.Id}", person);
-});
+app.AddPersonEndpoints();
 
 app.Run();
