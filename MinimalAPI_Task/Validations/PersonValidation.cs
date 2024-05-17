@@ -24,7 +24,7 @@ namespace MinimalAPI_Task.Validations
                 .Must(BeAValidDate)
                 .WithMessage("BirthDate must be in the format YYYY-MM-DD.");
 
-            RuleFor(p=> p.Address)
+            RuleFor(p => p.Address)
                 .SetValidator(new AddressValidation());
         }
 

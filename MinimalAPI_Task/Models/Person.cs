@@ -10,6 +10,6 @@ namespace MinimalAPI_Task.Models
         public string LastName { get; set; }
         [JsonConverter(typeof(DateOnlyJsonConverter))]
         public DateOnly BirthDate { get; set; }
-        public Address Address { get; set; } 
+        public Address Address { get; set; }
     }
 }

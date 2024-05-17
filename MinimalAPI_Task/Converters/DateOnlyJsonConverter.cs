@@ -11,11 +11,11 @@ namespace MinimalAPI_Task.Converters
             {
                 return DateOnly.FromDateTime(reader.GetDateTime());
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 return default(DateOnly);
             }
-            
+
         }
 
         public override void Write(Utf8JsonWriter writer, DateOnly value, JsonSerializerOptions options)

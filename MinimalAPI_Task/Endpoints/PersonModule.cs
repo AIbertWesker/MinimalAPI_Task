@@ -18,10 +18,10 @@ namespace MinimalAPI_Task.Endpoints
                         ? Results.Ok(person)
                         : Results.NotFound());
 
-            app.MapPost("/personitems", async (IValidator <Person> _validator, Person person, FakeDb db) =>
+            app.MapPost("/personitems", async (IValidator<Person> _validator, Person person, FakeDb db) =>
             {
                 var validationResult = await _validator.ValidateAsync(person);
-                if(!validationResult.IsValid)
+                if (!validationResult.IsValid)
                     return Results.BadRequest(validationResult.Errors.FirstOrDefault().ToString());
 
                 db.People.Add(person);
