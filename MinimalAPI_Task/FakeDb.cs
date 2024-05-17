@@ -9,5 +9,11 @@ namespace MinimalAPI_Task
             : base(options) { }
 
         public DbSet<Person> People => Set<Person>();
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Person>().OwnsOne(p => p.Address);
+        }
     }
 }

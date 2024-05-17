@@ -10,7 +10,7 @@ namespace MinimalAPI_Task.Endpoints
             app.MapGet("/personitems", async (FakeDb db) =>
                 await db.People.ToListAsync());
 
-            app.MapGet("/personitems/{id}", async (int id, FakeDb db) =>
+            app.MapGet("/personitems/{id:int}", async (int id, FakeDb db) =>
                 await db.People.FindAsync(id)
                     is Person person
                         ? Results.Ok(person)
